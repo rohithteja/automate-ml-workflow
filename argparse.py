@@ -27,6 +27,9 @@ def main(args):
   X_train,X_test,y_train,y_test = train_test_split(X, y,stratify=y,
                                                   test_size=0.3, 
                                                   random_state=42)
+	
+  path = f'output/{dim_red_type}/{n_comp}/{classifier}/'
+  Path(path).mkdir(parents=True, exist_ok=True)
 
   # dimensionality reduction
   def dim_reduction(X_train,X_test,dim_red_type,n_comp):
@@ -54,6 +57,7 @@ def main(args):
 
   X_train, X_test = dim_reduction(X_train,X_test,'lle',2)
   acc_score = train('lr',X_train,y_train,X_test,y_test)
+  np.savetxt(f'{path}acc_score.txt', f'Accuracy score: {acc_score}', fmt='%s')
   print(acc_score)
   
 def more_main():
