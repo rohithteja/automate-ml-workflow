@@ -7,7 +7,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from argparse import ArgumentDefaultsHelpFormatter, ArgumentParser
+from pathlib import Path
+import numpy as np
 
+# add arguments
 def parse_args():
 	parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter,
 	                        conflict_handler='resolve')
@@ -20,6 +23,7 @@ def parse_args():
 	args = parser.parse_args()
 	return args
 
+# wrap the code inside main function
 def main(args):
   X, y = make_classification(n_samples=1000, n_features=30,
                              n_informative=15, n_redundant=15, 
@@ -28,7 +32,7 @@ def main(args):
                                                   test_size=0.3, 
                                                   random_state=42)
 	
-  path = f'output/{dim_red_type}/{n_comp}/{classifier}/'
+  path = f'output/{args.dim_red_type}/{args.n_comp}/{args.classifier}/'
   Path(path).mkdir(parents=True, exist_ok=True)
 
   # dimensionality reduction
@@ -57,8 +61,12 @@ def main(args):
 
   X_train, X_test = dim_reduction(X_train,X_test,'lle',2)
   acc_score = train('lr',X_train,y_train,X_test,y_test)
-  np.savetxt(f'{path}acc_score.txt', f'Accuracy score: {acc_score}', fmt='%s')
-  print(acc_score)
+  
+  # save accuracy score as text file
+  text_file = open(f'{path}acc_score.txt', "w")
+  text_file.write(f'Accuracy score: {acc_score}')
+  text_file.close()
+  print('Accuracy score: ',acc_score)
   
 def more_main():
 	args = parse_args()
