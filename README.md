@@ -6,4 +6,4 @@ Link to article: https://towardsdatascience.com/how-to-automate-and-simplify-you
 1. To run all experiments use: `bash loop.sh`
 2. To run individual experiments use: `python argparse_automate.py --dim_red_type "pca" --n_comp 10 --classifier "svc"`
 
-The results (accuracy scores) are saved in a text file in nested folders titled with the same arguments used to run the code.
+The results (accuracy scores) are saved in a text file in nested folders (output folder) titled with the same arguments used to run the code.
